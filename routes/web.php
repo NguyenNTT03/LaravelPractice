@@ -23,17 +23,23 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show'); 
     Route::post('/products/buy/{id}', [OrderController::class, 'buy'])->middleware('auth')->name('products.buy');
-    Route::delete('/products/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
-    Route::get('/products/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 });
 
 Route::get('/products', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products/detail/{id}', [ProductController::class, 'showDetail'])->name('products.showDetail');
+Route::view('/index', 'blade.index')->name('index');
+Route::view('/accesPay', 'blade.accesPay')->name('accesPay');
+Route::view('/accessories', 'blade.Acessories')->name('accessories');
+Route::view('/bottom', 'blade.Bottom')->name('bottom');
+Route::view('/cart', 'blade.Cart')->name('cart');
+Route::view('/csdt', 'blade.CSDT')->name('csdt');
+Route::view('/cstv', 'blade.CSTV')->name('cstv');
+Route::view('/csvc', 'blade.CSVC')->name('csvc');
+Route::view('/detail-product', 'blade.DetailProducts')->name('detail-product');
+Route::view('/register-1', 'blade.Register')->name('register-1');
+Route::view('/sale', 'blade.Sale')->name('sale');
+Route::view('/top', 'blade.Top')->name('top');
+Route::view('/payCart', 'blade.PayCart')->name('payCart');
 
 require __DIR__.'/auth.php';
