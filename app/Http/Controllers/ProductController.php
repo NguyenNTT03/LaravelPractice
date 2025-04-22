@@ -1,38 +1,70 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Repositories\Product\ProductRepositoryInterface;
+
+use App\Http\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class ProductController 
 {
-    protected $productRepo;
+    protected $productService;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    /**
+     * Initialize ProductService.
+     * 
+     * @param ProductService $productService Instance of the ProductService.
+     */
+    public function __construct(ProductService $productService)
     {
-        $this->productRepo = $productRepo;
+        $this->productService = $productService;
     }
 
+    /**
+     * Display the list of products.
+     *
+     * @return \Illuminate\View\View View displaying the list of products.
+     */
     public function show()
     {
-        $products = $this->productRepo->getSimpleList();
+        $products = $this->productService->getAllProducts();
         return view('showProduct', ['products' => $products]);
     }
 
-    public function showDetail($productId)
+    /**
+     * Display product details.
+     * 
+     * @param int $productId Product ID.
+     * @return \Illuminate\View\View View displaying product details.
+     */
+    public function showDetail(int $productId)
     {
-        $product = $this->productRepo->findById($productId);
+        $product = $this->productService->getProductDetail($productId);
         return view('showProductDetail', ['product' => $product]);
     }
 
-    public function delete($productId)
+    /**
+     * Delete a product.
+     * 
+     * @param int $productId Product ID.
+     * @return bool Returns true if deletion is successful, otherwise false.
+     */
+    public function delete(int $productId)
     {
-        $deleted = $this->productRepo->delete($productId);
-        return redirect()->route('products.show')->with($deleted ? 'success' : 'error', $deleted ? 'Xóa thành công!' : 'Không tồn tại!');
+        $deleted = $this->productService->deleteProduct($productId);
+        return redirect()->route('products.show')->with(
+            $deleted ? config('config.type.success') : config('config.type.error'),
+            $deleted ? config('config.message.delete.success') : config('config.message.delete.error')
+        );
     }
 
-    public function update(Request $request, $productId)
+    /**
+     * Update product information.
+     * 
+     * @param Request $request HTTP request containing update data.
+     * @param int $productId Product ID.
+     * @return \Illuminate\Http\RedirectResponse Redirects after updating the product.
+     */
+    public function update(Request $request, int $productId)
     {
         $data = $request->only(['name', 'price', 'description']);
         if ($request->hasFile('img_path')) {
@@ -42,13 +74,22 @@ class ProductController extends Controller
             $data['img_path'] = $path;
         }
 
-        $updated = $this->productRepo->update($productId, $data);
-        return redirect()->route('products.show')->with($updated ? 'success' : 'error', $updated ? 'Cập nhật thành công!' : 'Không tồn tại!');
+        $updated = $this->productService->updateProduct($productId, $data);
+        return redirect()->route('products.show')->with(
+            $updated ? config('config.type.success') : config('config.type.error'),
+            $updated ? config('config.message.update.success') : config('config.message.update.error')
+        );
     }
 
-    public function edit($id)
+    /**
+     * Display the product edit interface.
+     * 
+     * @param int $id Product ID.
+     * @return \Illuminate\View\View View for editing the product.
+     */
+    public function edit(int $id)
     {
-        $product = $this->productRepo->findById($id);
+        $product = $this->productService->getProductDetail($id);
         return view('editProduct', compact('product'));
     }
 }
