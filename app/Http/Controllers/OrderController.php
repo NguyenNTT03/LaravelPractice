@@ -28,9 +28,9 @@ class OrderController
      * @param int $productId ID of the product to purchase.
      * @return \Illuminate\Http\RedirectResponse Redirects to the product list with a success message.
      */
-    public function buyProduct(Request $request, $productId)
+    public function createOrder(Request $request, $productId)
     {
-        $this->orderService->buyProduct($productId);
+        $this->orderService->createOrder($productId);
         return redirect()->route('products.show')->with(config('config.type.success'), config('config.message.delete.success'));
     }
 }

@@ -28,8 +28,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::get('/products', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products/detail/{id}', [ProductController::class, 'showDetail'])->name('products.showDetail');
 
-//phan router nay duoc tao ra de hien thi giao dien
-//se thay doi sau khi co controller tuong ung duoc tao
+//this router part is created to display the interface
+//will change after the corresponding controller is created
 Route::view('/index', 'blade.index')->name('index');
 Route::view('/accesPay', 'blade.accesPay')->name('accesPay');
 Route::view('/accessories', 'blade.Acessories')->name('accessories');

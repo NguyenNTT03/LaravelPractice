@@ -24,7 +24,7 @@ class ProductController
      *
      * @return \Illuminate\View\View View displaying the list of products.
      */
-    public function show()
+    public function getAllProducts()
     {
         $products = $this->productService->getAllProducts();
         return view('showProduct', ['products' => $products]);
@@ -36,9 +36,9 @@ class ProductController
      * @param int $productId Product ID.
      * @return \Illuminate\View\View View displaying product details.
      */
-    public function showDetail(int $productId)
+    public function getProductDetail(int $productId)
     {
-        $product = $this->productService->getProductDetail($productId);
+        $product = $this->productService->getProductDetailById($productId);
         return view('showProductDetail', ['product' => $product]);
     }
 
@@ -48,9 +48,9 @@ class ProductController
      * @param int $productId Product ID.
      * @return bool Returns true if deletion is successful, otherwise false.
      */
-    public function delete(int $productId)
+    public function deleteProduct(int $productId)
     {
-        $deleted = $this->productService->deleteProduct($productId);
+        $deleted = $this->productService->deleteProductById($productId);
         return redirect()->route('products.show')->with(
             $deleted ? config('config.type.success') : config('config.type.error'),
             $deleted ? config('config.message.delete.success') : config('config.message.delete.error')
@@ -64,7 +64,7 @@ class ProductController
      * @param int $productId Product ID.
      * @return \Illuminate\Http\RedirectResponse Redirects after updating the product.
      */
-    public function update(Request $request, int $productId)
+    public function updateProducT(Request $request, int $productId)
     {
         $data = $request->only(['name', 'price', 'description']);
         if ($request->hasFile('img_path')) {
@@ -74,7 +74,7 @@ class ProductController
             $data['img_path'] = $path;
         }
 
-        $updated = $this->productService->updateProduct($productId, $data);
+        $updated = $this->productService->updateProductById($productId, $data);
         return redirect()->route('products.show')->with(
             $updated ? config('config.type.success') : config('config.type.error'),
             $updated ? config('config.message.update.success') : config('config.message.update.error')
@@ -87,9 +87,9 @@ class ProductController
      * @param int $id Product ID.
      * @return \Illuminate\View\View View for editing the product.
      */
-    public function edit(int $id)
+    public function editProduct(int $id)
     {
-        $product = $this->productService->getProductDetail($id);
+        $product = $this->productService->getProductDetailById($id);
         return view('editProduct', compact('product'));
     }
 }

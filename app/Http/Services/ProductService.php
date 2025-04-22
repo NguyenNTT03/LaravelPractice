@@ -35,7 +35,7 @@ class ProductService
      * @param int $productId
      * @return array
      */
-    public function getProductDetail(int $productId)
+    public function getProductDetailById(int $productId)
     {
         return $this->productRepository->findById($productId);
     }
@@ -46,7 +46,7 @@ class ProductService
      * @param int $productId
      * @return bool
      */
-    public function deleteProduct(int $productId)
+    public function deleteProductById(int $productId)
     {
         return $this->productRepository->delete($productId);
     }
@@ -58,7 +58,7 @@ class ProductService
      * @param array $data
      * @return bool
      */
-    public function updateProduct(int $productId, array $data)
+    public function updateProductById(int $productId, array $data)
     {
         return $this->productRepository->update($productId, $data);
     }
