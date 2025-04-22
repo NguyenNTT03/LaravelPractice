@@ -1,38 +1,68 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Repositories\Product\ProductRepositoryInterface;
+
+use App\Http\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class ProductController 
 {
-    protected $productRepo;
+    protected $productService;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    /**
+     * Khởi tạo ProductService
+     * @param ProductService $productServiceproductService
+    */
+    public function __construct(ProductService $productService)
     {
-        $this->productRepo = $productRepo;
+        $this->productService = $productService;
     }
 
+    /**
+     * Hiển thị danh sách sản phẩm.
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
-        $products = $this->productRepo->getSimpleList();
+        $products = $this->productService->getAllProducts();
         return view('showProduct', ['products' => $products]);
     }
 
-    public function showDetail($productId)
+    /**
+     * Hiển thị chi tiết  sản phẩm.
+     * @param int $productId
+     * @return \Illuminate\View\View
+     */
+    public function showDetail(int $productId)
     {
-        $product = $this->productRepo->findById($productId);
+        $product = $this->productService->getProductDetail($productId);
         return view('showProductDetail', ['product' => $product]);
     }
 
-    public function delete($productId)
+    /**
+     * Xóa sản phẩm.
+     *@param int $productId
+     * @return bool
+     */
+    public function delete(int $productId)
     {
-        $deleted = $this->productRepo->delete($productId);
-        return redirect()->route('products.show')->with($deleted ? 'success' : 'error', $deleted ? 'Xóa thành công!' : 'Không tồn tại!');
+        $deleted = $this->productService->deleteProduct($productId);
+        return redirect()->route('products.show')->with(
+            $deleted ? config('config.type.success') : config('config.type.error'),
+            $deleted ? config('config.message.delete.success') : config('config.message.delete.error')
+        );
     }
 
-    public function update(Request $request, $productId)
+    /**
+     * Cập nhật sản phẩm.
+     *
+     * @param Request $request 
+     * @param int $productId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function update(Request $request, int $productId)
     {
         $data = $request->only(['name', 'price', 'description']);
         if ($request->hasFile('img_path')) {
@@ -42,13 +72,22 @@ class ProductController extends Controller
             $data['img_path'] = $path;
         }
 
-        $updated = $this->productRepo->update($productId, $data);
-        return redirect()->route('products.show')->with($updated ? 'success' : 'error', $updated ? 'Cập nhật thành công!' : 'Không tồn tại!');
+        $updated = $this->productService->updateProduct($productId, $data);
+        return redirect()->route('products.show')->with(
+            $updated ? config('config.type.success') : config('config.type.error'),
+            $updated ? config('config.message.update.success') : config('config.message.update.error')
+        );
     }
 
-    public function edit($id)
+    /**
+     * Hiển thị giao diện chỉnh sửa sản phẩm.
+     *
+     * @param int $id 
+     * @return \Illuminate\View\View 
+     */
+    public function edit(int $id)
     {
-        $product = $this->productRepo->findById($id);
+        $product = $this->productService->getProductDetail($id);
         return view('editProduct', compact('product'));
     }
 }

@@ -21,13 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/products/buy/{id}', [OrderController::class, 'buy'])->middleware('auth')->name('products.buy');
 });
 
 Route::get('/products', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products/detail/{id}', [ProductController::class, 'showDetail'])->name('products.showDetail');
+
+//phan router nay duoc tao ra de hien thi giao dien
+//se thay doi sau khi co controller tuong ung duoc tao
 Route::view('/index', 'blade.index')->name('index');
 Route::view('/accesPay', 'blade.accesPay')->name('accesPay');
 Route::view('/accessories', 'blade.Acessories')->name('accessories');

@@ -1,25 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Repositories\Order\OrderRepositoryInterface;
+use App\Http\Interfaces\OrderRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Services\OrderService;
 
 
-class OrderController extends Controller
+class OrderController 
 {
-    protected $orderRepo;
     protected $orderService;
-    public function __construct(OrderRepositoryInterface $orderRepo, OrderService $orderService)
+    
+    public function __construct(OrderService $orderService)
     {
-        $this->orderRepo = $orderRepo;
         $this->orderService = $orderService;
     }
 
     public function buyProduct(Request $request, $productId)
     {
         $this->orderService->buyProduct($productId);
-        return redirect()->route('products.show')->with('success', 'Mua hàng thành công!');
+        return redirect()->route('products.show')->with(config('config.type.success'), config('config.message.delete.success'));
     }
 }
