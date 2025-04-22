@@ -10,7 +10,7 @@ class ProductService
     protected $productRepository; 
     
      /**
-     * Khởi tạo ProductService.
+     *Initialize ProductService.
      *
      * @param ProductRepositoryInterface $productRepository
      */
@@ -20,7 +20,7 @@ class ProductService
     }
 
     /**
-     * Lấy danh sách sản phẩm.
+     * Get product list
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -30,7 +30,7 @@ class ProductService
     }
 
      /**
-     * Lấy thông tin chi tiết của một sản phẩm.
+     * Get product detail information 
      *
      * @param int $productId
      * @return array
@@ -41,7 +41,7 @@ class ProductService
     }
 
     /**
-     * Xóa sản phẩm.
+     * Delete product
      *
      * @param int $productId
      * @return bool
@@ -52,7 +52,7 @@ class ProductService
     }
 
      /**
-     * Cập nhật thông tin sản phẩm.
+     * Update product information
      *
      * @param int $productId
      * @param array $data

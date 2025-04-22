@@ -10,42 +10,41 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected $model;
 
     /**
-     * Khởi tạo Repository
+     * Initialize Repository.
      * 
-     * @param Model $model
-    */
+     * @param Model $model The model instance.
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
-      /**
-     * Lấy tất cả bản ghi từ Model.
+    /**
+     * Retrieve all records from the model.
      *
-     * @return \Illuminate\Database\Eloquent\Collection Danh sách bản ghi.
+     * @return \Illuminate\Database\Eloquent\Collection 
      */
-
     public function getAll()
     {
         return $this->model->all();
     }
 
     /**
-     * Tìm bản ghi theo id
+     * Find a record by ID.
      *
      * @param int $id 
-     * @return Model
+     * @return Model|null
      */
     public function findById(int $id)
     {
         return $this->model->find($id);
     }
-    
+
     /**
-     * Tìm bản ghi theo id
+     * Delete a record by ID.
      *
-     * @param int $id 
-     * @return bool
+     * @param int $id The ID of the record.
+     * @return bool 
      */
     public function delete(int $id)
     {
@@ -53,12 +52,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $item ? $item->delete() : false;
     }
 
-     /**
-     * Cập nhật bản ghi theo id
+    /**
+     * Update a record by ID.
      *
-     * @param int $id 
-     * @param array $data 
-     * @return Model|bool 
+     * @param int $id The ID of the record.
+     * @param array $data The data to update.
+     * @return Model|bool Returns the updated record or false if not found.
      */
     public function update(int $id, array $data)
     {
@@ -68,11 +67,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $item;
     }
 
-     /**
-     *Tạo mới một bản ghi
+    /**
+     * Create a new record.
      *
-     * @param array $data
-     * @return Model 
+     * @param array $data The data to create a record.
+     * @return Model Returns the newly created record.
      */
     public function create(array $data)
     {

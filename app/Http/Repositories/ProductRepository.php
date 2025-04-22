@@ -9,7 +9,7 @@ use App\Http\Interfaces\ProductRepositoryInterface;
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {   
      /**
-     * Khởi tạo ProductRepository
+     * Initialize ProductRepository
      *
      * @param Product $product
      */
@@ -19,7 +19,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
     
     /**
-     * Lấy danh sách đơn giản của sản phẩm (chỉ gồm ID và tên)
+     * Get simple product list (include id and name)
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

@@ -5,26 +5,26 @@ namespace App\Http\Interfaces;
 interface BaseRepositoryInterface
 {
     /**
-     * Lấy tất cả sản phẩm.
+     * Get all record 
      */
     public function getAll();
 
     /**
-     * Tìm theo ID.
+     * Find by id
      *
      * @param int $id
      */
     public function findById(int $id);
 
     /**
-     * Xóa theo ID.
+     *Delete by id
      *
      * @param int $id 
      */
     public function delete(int $id);
 
     /**
-     * Cập nhật thông tin 
+     * Update information 
      *
      * @param int $id 
      * @param array $data 
@@ -32,7 +32,7 @@ interface BaseRepositoryInterface
     public function update(int $id, array $data);
 
     /**
-     * Tạo mới một bản ghighi
+     * Create new record
      *
      * @param array $data 
      */

@@ -10,7 +10,7 @@ class OrderService
     protected $orderRepository;
 
      /**
-     * Khởi tạo ProductService.
+     * Initialize ProductService.
      *
      * @param OrderRepositoryInterface $orderRepository
      */
@@ -20,7 +20,7 @@ class OrderService
     }
 
     /**
-     * Mua sản phẩm
+     * Buy product
      * @param int $productId
      * @return App\Models\Order
     */

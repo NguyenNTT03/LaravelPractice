@@ -11,11 +11,23 @@ class OrderController
 {
     protected $orderService;
     
+    /**
+     * Initialize OrderService.
+     * 
+     * @param OrderService $orderService Instance of the OrderService.
+     */
     public function __construct(OrderService $orderService)
     {
         $this->orderService = $orderService;
     }
 
+    /**
+     * Process product purchase.
+     *
+     * @param Request $request HTTP request containing purchase details.
+     * @param int $productId ID of the product to purchase.
+     * @return \Illuminate\Http\RedirectResponse Redirects to the product list with a success message.
+     */
     public function buyProduct(Request $request, $productId)
     {
         $this->orderService->buyProduct($productId);

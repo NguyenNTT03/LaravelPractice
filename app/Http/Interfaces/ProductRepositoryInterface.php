@@ -7,7 +7,7 @@ use App\Http\Interfaces\BaseRepositoryInterface;
 interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
     /**
-     * Lấy danh sách đơn giản của sản phẩm (chỉ gồm ID và tên)
+     * Get simple product list
      *
      * @return \Illuminate\Database\Eloquent\Collection 
      */

@@ -10,18 +10,19 @@ class ProductController
     protected $productService;
 
     /**
-     * Khởi tạo ProductService
-     * @param ProductService $productServiceproductService
-    */
+     * Initialize ProductService.
+     * 
+     * @param ProductService $productService Instance of the ProductService.
+     */
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
     }
 
     /**
-     * Hiển thị danh sách sản phẩm.
+     * Display the list of products.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View View displaying the list of products.
      */
     public function show()
     {
@@ -30,9 +31,10 @@ class ProductController
     }
 
     /**
-     * Hiển thị chi tiết  sản phẩm.
-     * @param int $productId
-     * @return \Illuminate\View\View
+     * Display product details.
+     * 
+     * @param int $productId Product ID.
+     * @return \Illuminate\View\View View displaying product details.
      */
     public function showDetail(int $productId)
     {
@@ -41,9 +43,10 @@ class ProductController
     }
 
     /**
-     * Xóa sản phẩm.
-     *@param int $productId
-     * @return bool
+     * Delete a product.
+     * 
+     * @param int $productId Product ID.
+     * @return bool Returns true if deletion is successful, otherwise false.
      */
     public function delete(int $productId)
     {
@@ -55,13 +58,12 @@ class ProductController
     }
 
     /**
-     * Cập nhật sản phẩm.
-     *
-     * @param Request $request 
-     * @param int $productId
-     * @return \Illuminate\Http\RedirectResponse
+     * Update product information.
+     * 
+     * @param Request $request HTTP request containing update data.
+     * @param int $productId Product ID.
+     * @return \Illuminate\Http\RedirectResponse Redirects after updating the product.
      */
-
     public function update(Request $request, int $productId)
     {
         $data = $request->only(['name', 'price', 'description']);
@@ -80,10 +82,10 @@ class ProductController
     }
 
     /**
-     * Hiển thị giao diện chỉnh sửa sản phẩm.
-     *
-     * @param int $id 
-     * @return \Illuminate\View\View 
+     * Display the product edit interface.
+     * 
+     * @param int $id Product ID.
+     * @return \Illuminate\View\View View for editing the product.
      */
     public function edit(int $id)
     {
