@@ -64,7 +64,7 @@ class ProductController
      * @param int $productId Product ID.
      * @return \Illuminate\Http\RedirectResponse Redirects after updating the product.
      */
-    public function updateProducT(Request $request, int $productId)
+    public function updateProduct(Request $request, int $productId)
     {
         $data = $request->only(['name', 'price', 'description']);
         if ($request->hasFile('img_path')) {
@@ -84,12 +84,12 @@ class ProductController
     /**
      * Display the product edit interface.
      * 
-     * @param int $id Product ID.
+     * @param int $productId
      * @return \Illuminate\View\View View for editing the product.
      */
-    public function editProduct(int $id)
+    public function editProduct(int $productId)
     {
-        $product = $this->productService->getProductDetailById($id);
+        $product = $this->productService->getProductDetailById($productId);
         return view('editProduct', compact('product'));
     }
 }

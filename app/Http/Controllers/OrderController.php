@@ -30,7 +30,7 @@ class OrderController
      */
     public function createOrder(Request $request, $productId)
     {
-        $this->orderService->createOrder($productId);
+        $this->orderService->createOrderByProductId($productId);
         return redirect()->route('products.show')->with(config('config.type.success'), config('config.message.delete.success'));
     }
 }

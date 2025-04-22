@@ -24,7 +24,7 @@ class OrderService
      * @param int $productId
      * @return App\Models\Order
     */
-    public function createOrder(int $productId)
+    public function createOrderByProductId(int $productId)
     {
         return $this->orderRepository->create([
             'user_id' => Auth::id(),
